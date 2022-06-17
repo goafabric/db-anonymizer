@@ -1,6 +1,7 @@
 package org.goafabric.anonymizer;
 
 import org.goafabric.anonymizer.persistence.DatabaseProvisioning;
+import org.goafabric.anonymizer.processors.AnonymizerJob;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,9 +21,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner init(ApplicationContext context, DatabaseProvisioning databaseProvisioning) {
+    public CommandLineRunner init(ApplicationContext context, DatabaseProvisioning databaseProvisioning, AnonymizerJob job) {
         return args -> {
             databaseProvisioning.run();
+            job.run();
             if ((args.length > 0) && ("-check-integrity".equals(args[0]))) { SpringApplication.exit(context, () -> 0);}
         };
 
