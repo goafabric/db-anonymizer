@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class AnonymizerJob {
     @Autowired
-    private PersonProcessor personProcessor;
+    private PersonJob personJob;
 
     @Autowired
-    private AddressProcessor addressProcessor;
+    private AddressJob addressJob;
 
     public void run() {
-        personProcessor.run();
-        addressProcessor.run();
+        personJob.run();
+        addressJob.run();
     }
 }

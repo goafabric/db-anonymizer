@@ -7,12 +7,25 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class AddressProcessor {
-
+public class PersonJob {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public void run() {
         log.info("anonymizing {}", this.getClass());
+        read();
+    }
+
+    private void read() {
+        final String sql = "select * from person";
+        jdbcTemplate.query(sql, resultSet -> {
+            while (resultSet.next()) {
+                process(resultSet.getString("id"));
+            }
+        });
+    }
+
+    private void process(String id) {
+        log.info("processing {}", id);
     }
 }

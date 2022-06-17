@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class PersonProcessor {
+public class AddressJob {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
