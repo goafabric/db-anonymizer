@@ -1,7 +1,7 @@
-package org.goafabric.anonymizer;
+package org.goafabric.anonymizer.crosscutting;
 
-import org.goafabric.anonymizer.processors.AddressJob;
-import org.goafabric.anonymizer.processors.PersonJob;
+import org.goafabric.anonymizer.job.AddressJob;
+import org.goafabric.anonymizer.job.PersonJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

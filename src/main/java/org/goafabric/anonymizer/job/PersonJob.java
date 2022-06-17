@@ -1,5 +1,6 @@
-package org.goafabric.anonymizer.processors;
+package org.goafabric.anonymizer.job;
 
+import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,9 @@ import javax.transaction.Transactional;
 public class PersonJob {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private Faker faker;
 
     final String tableName = "public.person";
 
@@ -33,6 +37,6 @@ public class PersonJob {
     private void write(String id) {
         final String fields = "first_name = ?, last_name = ?";
         jdbcTemplate.update(String.format("UPDATE %s SET %s WHERE id = ?", tableName, fields),
-                "fake name", "fake name", id);
+                faker.name().firstName(), faker.name().lastName(), id);
     }
 }
