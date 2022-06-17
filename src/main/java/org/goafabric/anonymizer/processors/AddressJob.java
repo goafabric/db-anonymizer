@@ -33,6 +33,6 @@ public class AddressJob {
     private void write(String id) {
         final String fields = "street = ?, city = ?";
         jdbcTemplate.update(String.format("UPDATE %s SET %s WHERE id = ?", tableName, fields),
-                "secret street", "secret city", id);
+                "fake street", "fake city", id);  //todo use faker
     }
 }

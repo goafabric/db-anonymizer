@@ -16,5 +16,6 @@ public class AnonymizerJob {
     public void run() {
         personJob.run();
         addressJob.run();
+        //todo: write processed jobs to a table and skip on next run, so that during a crash we won't start all over again
     }
 }

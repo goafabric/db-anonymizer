@@ -33,6 +33,6 @@ public class PersonJob {
     private void write(String id) {
         final String fields = "first_name = ?, last_name = ?";
         jdbcTemplate.update(String.format("UPDATE %s SET %s WHERE id = ?", tableName, fields),
-                "han", "solo", id);
+                "fake name", "fake name", id);
     }
 }
