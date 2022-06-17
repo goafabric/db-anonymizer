@@ -23,10 +23,10 @@ public class PersonJob {
 
     private void read() {
         jdbcTemplate.query(String.format("select * from %s",tableName), resultSet -> {
-            while (resultSet.next()) {
+            do {
                 log.info("processing {}", resultSet.getString("id"));
                 write(resultSet.getString("id"));
-            }
+            }  while (resultSet.next());
         });
     }
 

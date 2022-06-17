@@ -22,9 +22,8 @@ public class Application {
     @Bean
     public CommandLineRunner init(ApplicationContext context, DatabaseProvisioning databaseProvisioning, AnonymizerJob job) {
         return args -> {
-            databaseProvisioning.run();
+            //databaseProvisioning.run();
             job.run();
-            if ((args.length > 0) && ("-check-integrity".equals(args[0]))) { SpringApplication.exit(context, () -> 0);}
         };
 
     }
