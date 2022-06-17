@@ -23,13 +23,14 @@ public class AddressJob {
 
     private void read() {
         jdbcTemplate.query(String.format("select * from %s",tableName), resultSet -> {
-            while (resultSet.next()) { write(resultSet.getString("id")); }
+            while (resultSet.next()) {
+                log.info("processing {}", resultSet.getString("id"));
+                write(resultSet.getString("id"));
+            }
         });
     }
 
     private void write(String id) {
-        log.info("processing {}", id);
-
         final String fields = "street = ?, city = ?";
         jdbcTemplate.update(String.format("UPDATE %s SET %s WHERE id = ?", tableName, fields),
                 "secret street", "secret city", id);
