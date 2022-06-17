@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 @Slf4j
 @Component
 @Transactional
-public class PersonJob {
+public class PersonJob implements AnonymizerJob {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

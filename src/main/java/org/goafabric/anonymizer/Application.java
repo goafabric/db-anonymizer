@@ -1,6 +1,6 @@
 package org.goafabric.anonymizer;
 
-import org.goafabric.anonymizer.crosscutting.AnonymizerJob;
+import org.goafabric.anonymizer.crosscutting.JobControl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner init(ApplicationContext context,  AnonymizerJob job) {
+    public CommandLineRunner init(ApplicationContext context,  JobControl job) {
         return args -> {
             job.run();
         };

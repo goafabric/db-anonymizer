@@ -1,21 +1,20 @@
 package org.goafabric.anonymizer.crosscutting;
 
-import org.goafabric.anonymizer.job.AddressJob;
-import org.goafabric.anonymizer.job.PersonJob;
+import org.goafabric.anonymizer.job.AnonymizerJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
-public class AnonymizerJob {
-    @Autowired
-    private PersonJob personJob;
+import java.util.List;
 
+@Component
+public class JobControl {
     @Autowired
-    private AddressJob addressJob;
+    private List<AnonymizerJob> jobs;
 
     public void run() {
-        personJob.run();
-        addressJob.run();
+        for (AnonymizerJob job : jobs) {
+            job.run();
+        }
         //todo: write processed jobs to a table and skip on next run, so that during a crash we won't start all over again
     }
 }
