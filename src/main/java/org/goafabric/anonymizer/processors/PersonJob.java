@@ -11,21 +11,23 @@ public class PersonJob {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    final String tableName = "public.person";
+
     public void run() {
-        log.info("anonymizing {}", this.getClass());
+        log.info("anonymizing {}", tableName);
         read();
     }
 
     private void read() {
-        final String sql = "select * from person";
-        jdbcTemplate.query(sql, resultSet -> {
-            while (resultSet.next()) {
-                process(resultSet.getString("id"));
-            }
+        jdbcTemplate.query("select * from " + tableName, resultSet -> {
+            while (resultSet.next()) { process(resultSet.getString("id")); }
         });
     }
 
     private void process(String id) {
+        //final String sql = "UPDATE " + tableName + ""
         log.info("processing {}", id);
+        jdbcTemplate.update("UPDATE public.person SET first_name = ?, last_name = ? WHERE id = ?"
+                , "han", "solo", id);
     }
 }
