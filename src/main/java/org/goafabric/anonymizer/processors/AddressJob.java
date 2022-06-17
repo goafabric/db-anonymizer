@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Component
+@Transactional
 public class AddressJob {
     @Autowired
     private JdbcTemplate jdbcTemplate;
