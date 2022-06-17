@@ -19,15 +19,16 @@ public class PersonJob {
     }
 
     private void read() {
-        jdbcTemplate.query("select * from " + tableName, resultSet -> {
-            while (resultSet.next()) { process(resultSet.getString("id")); }
+        jdbcTemplate.query(String.format("select * from %s",tableName), resultSet -> {
+            while (resultSet.next()) { write(resultSet.getString("id")); }
         });
     }
 
-    private void process(String id) {
-        //final String sql = "UPDATE " + tableName + ""
+    private void write(String id) {
         log.info("processing {}", id);
-        jdbcTemplate.update("UPDATE public.person SET first_name = ?, last_name = ? WHERE id = ?"
-                , "han", "solo", id);
+
+        final String fields = "first_name = ?, last_name = ?";
+        jdbcTemplate.update(String.format("UPDATE %s SET %s WHERE id = ?", tableName, fields),
+                "han", "solo", id);
     }
 }
