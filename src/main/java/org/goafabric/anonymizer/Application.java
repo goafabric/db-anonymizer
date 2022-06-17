@@ -1,7 +1,6 @@
 package org.goafabric.anonymizer;
 
 import org.goafabric.anonymizer.persistence.DatabaseProvisioning;
-import org.goafabric.anonymizer.processors.AnonymizerJob;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
