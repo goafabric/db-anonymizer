@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  person-service:
+  db-anonymizer:
     container_name: ${_Values_root_name}-application
     image:  ${_Values_image_repository}${_Values_image_native}:${_Values_image_tag}
     restart: 'no'
@@ -26,26 +26,11 @@ services:
       - server.port=${_Values_service_port}
       - tomcat.max-threads=20
       - security.authentication.enabled=false
-      #forwarding sub url
-      - server.forward-headers-strategy=FRAMEWORK
-      #monitoring
-      - management.endpoint.health.show-details=always
-      - management.endpoints.web.exposure.include=health,prometheus,heapdump
-      #zipkin / jaeger
-      - spring.zipkin.service.name=person-service
-      - spring.zipkin.baseUrl=http://host.docker.internal:9411
-      - spring.sleuth.enabled=true
-      - spring.zipkin.enabled=true
       #persistence
       - spring.datasource.url=jdbc:postgresql://${_Values_root_name}-postgres:5432/persondb
-      - spring.datasource.username=person-service
-      - spring.datasource.password=person-service
+      - spring.datasource.username=db-anonymizer
+      - spring.datasource.password=db-anonymizer
       - database.provisioning.goals=-import-demo-data
-      #adapter
-      - adapter.calleeservice.url=http://host.docker.internal:50900
-      - adapter.calleeservice.user=YWRtaW4=
-      - adapter.calleeservice.password=YWRtaW4=
-      - adapter.timeout=10000
       #log levels
       - logging.level.root=WARN
       - logging.level.org.springframework=INFO
@@ -68,8 +53,8 @@ services:
       - 50810:5432
     environment:
       - TZ=Europe/Berlin
-      - POSTGRES_USER=person-service
-      - POSTGRES_PASSWORD=person-service
+      - POSTGRES_USER=db-anonymizer
+      - POSTGRES_PASSWORD=db-anonymizer
       - POSTGRES_DB=persondb
     command: postgres -c 'shared_buffers=128MB' -c 'max_connections=30' -c 'shared_preload_libraries=pg_stat_statements'
     volumes:
@@ -78,27 +63,11 @@ services:
     networks:
       - ${_Values_root_name}-net
 
-  nginx:
-    container_name: ${_Values_root_name}-nginx
-    image: nginx:1.20.2
-    restart: 'no'
-    ports:
-      - 8081:80
-      - 443:443
-    networks:
-      - ${_Values_root_name}-net
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./server.pem:/etc/ssl/server.pem
-      - ./server.key:/etc/ssl/server.key
-    depends_on:
-      - person-service
-
 volumes:
     tmp:
     applogs:
     pgdata:
 
 networks:
-  person-service-net:
+  db-anonymizer-net:
     driver: bridge
