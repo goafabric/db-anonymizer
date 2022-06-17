@@ -1,6 +1,5 @@
 package org.goafabric.anonymizer;
 
-import org.goafabric.anonymizer.persistence.DatabaseProvisioning;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,9 +19,8 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner init(ApplicationContext context, DatabaseProvisioning databaseProvisioning, AnonymizerJob job) {
+    public CommandLineRunner init(ApplicationContext context,  AnonymizerJob job) {
         return args -> {
-            //databaseProvisioning.run();
             job.run();
         };
 
