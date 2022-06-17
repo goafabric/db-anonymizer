@@ -3,29 +3,6 @@ server:
   port: 50800
   tomcat.max-threads: 20
 
-#monitoring
-management:
-  endpoint:
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        include: "health,prometheus,heapdump"
-
-springdoc.swagger-ui.path: /swagger-ui/index.html
-
-#jaeger / zipkin
-spring.zipkin.service.name: "person-service"
-spring.zipkin.enabled: true
-spring.sleuth.enabled: ${spring.zipkin.enabled}
-logging.level.zipkin2: "FATAL"
-
-#security
-security.authentication.enabled: true
-
-spring.security.user.name: "admin"
-spring.security.user.password: "admin"
 
 #persistence
 spring.datasource.url: jdbc:h2:mem:persondb
@@ -42,16 +19,6 @@ spring.jpa.hibernate.ddl-auto: none
 
 database.provisioning.goals: -import-demo-data
 
-#adapter
-adapter:
-  timeout: 10000
-  calleeservice:
-    url: http://localhost:50900
-    user: YWRtaW4=
-    password: YWRtaW4=
-
-#spring.sleuth.baggage.remote-fields: X-TenantId, X-Auth-Request-Preferred-Username
-#spring.sleuth.baggage.correlation-fields: X-TenantId, X-Auth-Request-Preferred-Username
 
 #logging
 logging.level.root: "WARN"
@@ -61,5 +28,3 @@ logging.level.org.goafabric: "INFO"
 logging.level.org.flywaydb.core: "INFO"
 logging.level.org.hibernate.SQL: "INFO"
 logging.level.org.goafabric.personservice.persistence.audit: "INFO"
-
-#logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
